@@ -71,6 +71,7 @@ typedef struct WTmouse_rawdata { WTp3 pos; int buttons; } WTmouse_rawdata;
 #define WTRENDER_PERSPECTIVE 0x0040
 #define WTRENDER_ANTIALIAS 0x0080
 #define WTRENDER_BEST 0x0100
+#define WTRENDER_TWOSIDED 0x0200
 
 #define WTMAT_AMBIENTDIFFUSE 0x01
 #define WTMAT_OPACITY 0x02
@@ -197,6 +198,11 @@ void WTgeometry_endedit(WTgeometry *g);
 void WTgeometry_recomputestats(WTgeometry *g, FLAG normals);
 void WTgeometry_scale(WTgeometry *g, float scale, const WTp3 origin);
 void WTgeometry_setrgb(WTgeometry *g, int r, int green, int b);
+void WTgeometry_setlighting(WTgeometry *g, FLAG enabled);
+void WTgeometry_setbrightness(WTgeometry *g, float brightness);
+void WTgeometry_rotatenormals(WTgeometry *g, int axis, float degrees);
+void WTgeometry_setstablelighting(WTgeometry *g, FLAG enabled);
+void WTgeometry_setoutline(WTgeometry *g, FLAG enabled);
 void WTgeometry_settexture(WTgeometry *g, const char *name, FLAG a, FLAG b);
 FLAG WTgeometry_changetexture(WTgeometry *g, const char *name, FLAG a, FLAG b);
 void WTgeometry_setmtable(WTgeometry *g, WTmtable *m);
@@ -211,7 +217,11 @@ WTpoly *WTpoly_next(WTpoly *p);
 void WTpoly_delete(WTpoly *p);
 void WTpoly_close(WTpoly *p);
 void WTpoly_settexture(WTpoly *p, const char *name, FLAG a, FLAG b);
+void WTpoly_settexture_uv(WTpoly *p, const char *name, const float *u, const float *v,
+                          int mode, FLAG filtered);
+void WTpoly_setcolor(WTpoly *p, int color);
 WTvertex *WTvertex_next(WTvertex *v);
+void WTvertex_setnormal(WTvertex *v, const WTp3 normal);
 
 WTmtable *WTmtable_new(int flags, int count, void *unused);
 int WTmtable_newentry(WTmtable *m);
