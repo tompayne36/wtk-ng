@@ -1,12 +1,12 @@
 #define SDL_MAIN_HANDLED
-#include "wt.h"
-
 #include <SDL.h>
-#ifdef __EMSCRIPTEN__
-#include <GL/gl.h>
-#include <emscripten.h>
-#else
+#if defined(__APPLE__)
 #include <OpenGL/gl.h>
+#else
+#include <GL/gl.h>
+#endif
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
 #endif
 #include <jpeglib.h>
 #include <ctype.h>
@@ -17,7 +17,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
-#include <sys/time.h>
+
+/* The classic WTK axis macros X/Y/Z must follow Windows/SDL headers. */
+#include "wt.h"
 
 struct WTvertex { WTp3 p; WTp3 normal; float uv[2]; int has_uv, has_normal; struct WTvertex *next; int index; };
 struct WTpoly { WTgeometry *owner; int *indices; int count, cap; GLuint texture; float *uv; float rgb[3]; int has_color; struct WTpoly *next; };
